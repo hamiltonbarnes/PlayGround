@@ -7,20 +7,24 @@ package form.bpad;
 
 
 
-//Importing for events and actions.
+
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.event.ActionListener;
-import javax.swing.JTextArea;
-
-//
+import javax.swing.*;
 import java.io.*;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import form.bpad.jmenu;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.JTextComponent;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 
-//importing for features of GUI
-import javax.swing.*;
+
+
 /**
  *
  * @author benedict barnes
@@ -69,59 +73,29 @@ public class bPad extends javax.swing.JFrame {
  //Creating a method/function for savefile      
       public static void saveFile() throws IOException
     {
-        
-//        JFrame saveFile = new JFrame();
-// 
-//            JFileChooser fileChooser = new JFileChooser();
-//fileChooser.setDialogTitle("Save ");   
-//int userSelection = fileChooser.showSaveDialog(saveFile);
-//if (userSelection == JFileChooser.APPROVE_OPTION) {
-//    
-//// creates a File object
-//File savefile = new File("/home/benedict/Document");
-// 
-//
-//// if file doesnt exists, then create it
-//      if (!savefile.exists()) {
-//            savefile.createNewFile();
-//        }
-//      try{
-//        FileWriter fw = new FileWriter(savefile.getAbsoluteFile());
-//       
-//        BufferedWriter bw = new BufferedWriter(fw);
-//        bw.write(text.getText());
-//        bw.close();
-//        }catch(Exception m){
-//    
-//}
-// // Display that the file has being saved.
-//      JOptionPane.showMessageDialog(null,"File Saved!");
-//
-//    
-//    File fileToSave = fileChooser.getSelectedFile();
-//    System.out.println("Save  file: " + fileToSave.getAbsolutePath());
-//}
-
-//String filename = JOptionPane.showInputDialog("Name this file");
-        JFileChooser savefile = new JFileChooser();
+                JFileChooser savefile = new JFileChooser();
         String filename = "";
         
         savefile.setSelectedFile(new File(filename));
-        savefile.showSaveDialog(savefile);
         BufferedWriter writer;
-        int sf = savefile.showSaveDialog(null);
-        if(sf == JFileChooser.APPROVE_OPTION){
+       // Demonstrate "Save File" dialog:
+        int saveF = savefile.showSaveDialog(null);
+        if(saveF == JFileChooser.APPROVE_OPTION){
             try {
-          writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
-                text.write(writer);
+          // if file doesnt exists, then create it
+               writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
+             // Writes the content to the file
+               text.write(writer);
                 writer.close();
+               //Display message after file has being saved.
                 JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);
                 
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else if(sf == JFileChooser.CANCEL_OPTION){
+        }else if(saveF == JFileChooser.CANCEL_OPTION){
+            // Display message if cancel option is used 
             JOptionPane.showMessageDialog(null, "File save has been canceled");
         }
     
@@ -131,18 +105,33 @@ public class bPad extends javax.swing.JFrame {
 //Creating a method/function for  Save file  As "Save As"
         public static void SaveAs()throws IOException{
             
-        JFrame saveAs = new JFrame();
- 
-            JFileChooser fileChooser = new JFileChooser();
-fileChooser.setDialogTitle("Save As ");   
- 
-// Demonstrate "SaveAs" dialog:
-int userSelection = fileChooser.showSaveDialog(saveAs);
-if (userSelection == JFileChooser.APPROVE_OPTION) {
-    File fileToSave = fileChooser.getSelectedFile();
-    System.out.println("Save file as: " + fileToSave.getAbsolutePath());
-  
-        }  
+        JFrame saveAs = new JFrame();  
+        JFileChooser SaveAs = new JFileChooser();
+        String filename = "";
+        
+        SaveAs.setSelectedFile(new File(filename));
+        BufferedWriter writer;
+       // Demonstrate "Save File" dialog:
+        int sa = SaveAs.showSaveDialog(null);
+        if(sa == JFileChooser.APPROVE_OPTION){
+            try {
+          // if file doesnt exists, then create it
+               writer = new BufferedWriter(new FileWriter(SaveAs.getSelectedFile()));
+             // Writes the content to the file
+               text.write(writer);
+                writer.close();
+               //Display message after file has being saved.
+                JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);
+                
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(sa == JFileChooser.CANCEL_OPTION){
+            // Display message if cancel option is used 
+            JOptionPane.showMessageDialog(null, "File save has been canceled");
+        }
+    
         }
      //Creating  a method/function to help paste to textarea from any origin  
     static void Paste(JTextArea output) throws IOException{
@@ -162,14 +151,82 @@ text.replaceRange("", text.getSelectionStart(),
                         text.getSelectionEnd());
     }
     
+    public static void Aboutus()throws IOException{
+    
+     JFrame About = new JFrame("About us");
+     
+      JTextArea about = new JTextArea();
+     about.setBackground(Color.cyan);  
+     about.setText("This a simple notepad created by Benedict."
+             + "    It  initially intended to be an IDE which "
+             + "    was to serve as bridge between Notepad ++ and "
+             + "    sublime text.But now though it can still serve as an IDE for"
+             + "    html,css,java,java script,c++, provided their works are saved "
+             + "    with their required extensions.");
+     about.setEditable(false);
+     about.setLineWrap(true);
+     about.setLocation(null);
+     about.setSelectedTextColor(Color.red);
+     
+        About.add(about);
+     
+     
+     
+     About.setSize(300,400);
+     About.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+     About.setTitle("About Us");
+     About.setVisible(true);
+     About.setLocationRelativeTo(null);
+     About.setResizable(true);
+     About.setBackground(Color.magenta);
+    }     
+    public static void Contact() throws IOException{
+    
+     JFrame contacts = new JFrame("Contacts Us @--");
+     
+      JTextArea contact = new JTextArea();
+     contacts.setBackground(Color.cyan);  
+     contact.setText("The developer who created this application."
+             + "    can be contacted through the following; "
+             + "    on gmail: hamiltonbarnes4@gmail.com"
+             + "    on github:https://github.com/hamiltonbarnes"
+             + "    on g+: hamiltonbarnes "
+             + "    and he is open for suggestions so as to implement in BPad V2.0.");
+     contact.setEditable(false);
+     contact.setLineWrap(true);
+     contact.setLocation(null);
+     contact.setSelectedTextColor(Color.red);
+     
+        contacts.add(contacts);
+     
+     
+     
+     contacts.setSize(300,400);
+     contacts.setDefaultCloseOperation(EXIT_ON_CLOSE);
+     contacts.setTitle("About Us");
+     contacts.setVisible(true);
+     contacts.setLocationRelativeTo(null);
+     contacts.setResizable(true);
+     contacts.setBackground(Color.magenta);
+    
+         }
+    public static void SelectAll() throws IOException{
+    
+    text.selectAll();
+    
+    }
+  
+
+    
     public bPad() {
         initComponents();
          
         
         this.setLocationRelativeTo(null);    
         this.setSize(600,600);
-          ImageIcon img =  new ImageIcon("frnds1.jpg");
+          ImageIcon img =  new ImageIcon("b.jpg");
         this.setIconImage(img.getImage());
+      
     }
 
     /**
@@ -194,29 +251,14 @@ text.replaceRange("", text.getSelectionStart(),
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
-        jMenu8 = new javax.swing.JMenu();
-        jMenuItem23 = new javax.swing.JMenuItem();
-        jMenuItem24 = new javax.swing.JMenuItem();
-        jMenuItem28 = new javax.swing.JMenuItem();
-        jMenuItem29 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem26 = new javax.swing.JMenuItem();
@@ -244,7 +286,7 @@ text.replaceRange("", text.getSelectionStart(),
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/new file.png")); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/of.jpg")); // NOI18N
         jMenuItem2.setText("Open File");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,6 +304,7 @@ text.replaceRange("", text.getSelectionStart(),
         });
         jMenu1.add(jMenuItem3);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/r1.jpg")); // NOI18N
         jMenu3.setText("Open Recent");
 
         jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
@@ -284,6 +327,7 @@ text.replaceRange("", text.getSelectionStart(),
         jMenu1.add(jMenu3);
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem5.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/save1.jpg")); // NOI18N
         jMenuItem5.setText("Save");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,6 +337,7 @@ text.replaceRange("", text.getSelectionStart(),
         jMenu1.add(jMenuItem5);
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem6.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/sasas.jpg")); // NOI18N
         jMenuItem6.setText("Save As");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,24 +346,8 @@ text.replaceRange("", text.getSelectionStart(),
         });
         jMenu1.add(jMenuItem6);
 
-        jMenuItem7.setText("Save All");
-        jMenu1.add(jMenuItem7);
-
-        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem11.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/Print.png")); // NOI18N
-        jMenuItem11.setText("Print");
-        jMenu1.add(jMenuItem11);
-
-        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem8.setText("New Window");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem8);
-
         jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem9.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/close.jpg")); // NOI18N
         jMenuItem9.setText("Close Window");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,16 +359,6 @@ text.replaceRange("", text.getSelectionStart(),
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
-
-        jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem12.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/u.jpg")); // NOI18N
-        jMenuItem12.setText("Undo");
-        jMenu2.add(jMenuItem12);
-
-        jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem13.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/r.jpg")); // NOI18N
-        jMenuItem13.setText("Redo");
-        jMenu2.add(jMenuItem13);
 
         jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem14.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/copy.GIF")); // NOI18N
@@ -371,58 +390,45 @@ text.replaceRange("", text.getSelectionStart(),
         });
         jMenu2.add(jMenuItem16);
 
-        jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem17.setText("Paste and Indent");
-        jMenu2.add(jMenuItem17);
-
+        jMenuItem25.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem25.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/select all.jpg")); // NOI18N
         jMenuItem25.setText("Select All");
+        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem25ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem25);
 
         jMenuBar1.add(jMenu2);
 
-        jMenu4.setText("Run");
+        jMenu5.setText("Find");
 
-        jMenuItem18.setText("Run using Google Chrome");
-        jMenu4.add(jMenuItem18);
+        jMenuItem7.setText("Find");
+        jMenu5.add(jMenuItem7);
 
-        jMenuItem19.setText("Run using Mozilla FireFox");
-        jMenu4.add(jMenuItem19);
-
-        jMenuItem20.setText("Run using Internet Explorer");
-        jMenu4.add(jMenuItem20);
-
-        jMenuBar1.add(jMenu4);
-
-        jMenu8.setText("Find");
-
-        jMenuItem23.setText("Find");
-        jMenu8.add(jMenuItem23);
-
-        jMenuItem24.setText("Find Next");
-        jMenu8.add(jMenuItem24);
-
-        jMenuItem28.setText("Find Previous");
-        jMenu8.add(jMenuItem28);
-
-        jMenuItem29.setText("Replace");
-        jMenu8.add(jMenuItem29);
-
-        jMenuBar1.add(jMenu8);
-
-        jMenu5.setText("Tools");
         jMenuBar1.add(jMenu5);
-
-        jMenu6.setText("Preferences");
-        jMenuBar1.add(jMenu6);
 
         jMenu9.setText("Help");
 
         jMenu10.setText("Contents");
 
+        jMenuItem26.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/About.gif")); // NOI18N
         jMenuItem26.setText("About Us");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
         jMenu10.add(jMenuItem26);
 
+        jMenuItem27.setIcon(new javax.swing.ImageIcon("/home/benedict/NetBeansProjects/BPad/contacts.jpg")); // NOI18N
         jMenuItem27.setText("Contact");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
         jMenu10.add(jMenuItem27);
 
         jMenu9.add(jMenu10);
@@ -444,10 +450,6 @@ text.replaceRange("", text.getSelectionStart(),
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
       // implementing window events
     //exit window on exit
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -456,8 +458,8 @@ text.replaceRange("", text.getSelectionStart(),
           // implementing window events
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
                     // Adding an  event to Reopen closed files in  bpad.
-        new ReOpenClosedFiles().setVisible(true);
-        
+      //  new ReOpenClosedFiles().setVisible(true);
+       
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -501,15 +503,13 @@ text.replaceRange("", text.getSelectionStart(),
         // implementing window events
     //Save a file as what one prefers
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-                   try{  SaveAs();}
-                catch(IOException m){
-                    m.printStackTrace();
-                };  
+        try {
+            SaveAs();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
                 
     }//GEN-LAST:event_jMenuItem6ActionPerformed
-    
-    
-    
     // implementing window events
     // Open a folder
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -526,11 +526,13 @@ text.replaceRange("", text.getSelectionStart(),
         try {
             saveFile();
         } catch (IOException ex) {
-            ex.printStackTrace();//(bPad.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    // implementing window events
+          //Cutting a text from text area.
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         try {
             cut(text);
@@ -538,6 +540,33 @@ text.replaceRange("", text.getSelectionStart(),
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+// implementing window events
+          //Opening the about us frame which tells us what this application is about.
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        try {
+            Aboutus();        
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        try{
+           Contact();
+        }catch(IOException ex){
+        ex.printStackTrace();
+        
+        }        
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+             
+        try {    
+            SelectAll();
+        } catch (IOException ex) {
+           ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem25ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -580,42 +609,29 @@ text.replaceRange("", text.getSelectionStart(),
     private javax.swing.JMenu jMenu10;
     private static javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private static javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem23;
-    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
-    private javax.swing.JMenuItem jMenuItem28;
-    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     public static javax.swing.JMenuItem jMenuItem5;
     private static javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JTextArea text;
     // End of variables declaration//GEN-END:variables
+
+    
     
     }
 

@@ -25,8 +25,9 @@ public class Newfile extends javax.swing.JFrame {
         this.setJMenuBar(jmenu);
         this.setLocationRelativeTo(null);    
         this.setSize(600,600);    
-     ImageIcon img =  new ImageIcon("life.jpg");
+     ImageIcon img =  new ImageIcon("b.jpg");
         this.setIconImage(img.getImage());
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
     }
 
     /**
