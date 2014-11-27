@@ -85,9 +85,24 @@ fileMenu.add(fileItem2);
 JMenu menuItem = new JMenu("Open Recent");
 menuItem.setIcon(new ImageIcon("r1.jpg"));
 JMenuItem menuItem1 = new JMenuItem("ReOpen Closed Files");
+menuItem1.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             new ReOpenClosedFiles().setVisible(true);   
+            }
+});
+            
 menuItem.add(menuItem1);
 
 JMenuItem menuItem2 = new JMenuItem("Clear Opened File List");
+menuItem2.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             new clearrecent().setVisible(true);   
+            }
+});
 menuItem.add(menuItem2);
 
 fileMenu.add(menuItem);
@@ -253,38 +268,27 @@ JMenu       HelpMenu = new JMenu("Help");
 HelpMenu.add(helpItem1);
 
 
-JMenuItem helpItem2 = new JMenuItem("About");
+JMenuItem helpItem2 = new JMenuItem("About"); 
 helpItem2.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-               try{
-               bPad.Aboutus();
-               } catch(IOException ex){
-                   ex.printStackTrace();
-               
-               }
+               new AboutUs().setVisible(true);
+        
             }
         });
-HelpMenu.add(helpItem2);
+helpItem1.add(helpItem2);
 
 JMenuItem helpItem3 = new JMenuItem("Contacts");
 helpItem3.addActionListener(new ActionListener(){
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-              try{
-              bPad.Contact();
-              } catch(IOException ex){
-                ex.printStackTrace();
-              
-              }              
-                
+               new ContactUs().setVisible(true);  
+                             
             }
 
 });
-HelpMenu.add(helpItem3);
+helpItem1.add(helpItem3);
 
 helpmenu.add(HelpMenu);
 add(helpmenu);

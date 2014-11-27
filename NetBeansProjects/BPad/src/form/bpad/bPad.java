@@ -151,65 +151,6 @@ text.replaceRange("", text.getSelectionStart(),
                         text.getSelectionEnd());
     }
     
-    public static void Aboutus()throws IOException{
-    
-     JFrame About = new JFrame("About us");
-     
-      JTextArea about = new JTextArea();
-     about.setBackground(Color.cyan);  
-     about.setText("This a simple notepad created by Benedict."
-             + "    It  initially intended to be an IDE which "
-             + "    was to serve as bridge between Notepad ++ and "
-             + "    sublime text.But now though it can still serve as an IDE for"
-             + "    html,css,java,java script,c++, provided their works are saved "
-             + "    with their required extensions.");
-     about.setEditable(false);
-     about.setLineWrap(true);
-     about.setLocation(null);
-     about.setSelectedTextColor(Color.red);
-     
-        About.add(about);
-     
-     
-     
-     About.setSize(300,400);
-     About.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-     About.setTitle("About Us");
-     About.setVisible(true);
-     About.setLocationRelativeTo(null);
-     About.setResizable(true);
-     About.setBackground(Color.magenta);
-    }     
-    public static void Contact() throws IOException{
-    
-     JFrame contacts = new JFrame("Contacts Us @--");
-     
-      JTextArea contact = new JTextArea();
-     contacts.setBackground(Color.cyan);  
-     contact.setText("The developer who created this application."
-             + "    can be contacted through the following; "
-             + "    on gmail: hamiltonbarnes4@gmail.com"
-             + "    on github:https://github.com/hamiltonbarnes"
-             + "    on g+: hamiltonbarnes "
-             + "    and he is open for suggestions so as to implement in BPad V2.0.");
-     contact.setEditable(false);
-     contact.setLineWrap(true);
-     contact.setLocation(null);
-     contact.setSelectedTextColor(Color.red);
-     
-        contacts.add(contacts);
-     
-     
-     
-     contacts.setSize(300,400);
-     contacts.setDefaultCloseOperation(EXIT_ON_CLOSE);
-     contacts.setTitle("About Us");
-     contacts.setVisible(true);
-     contacts.setLocationRelativeTo(null);
-     contacts.setResizable(true);
-     contacts.setBackground(Color.magenta);
-    
-         }
     public static void SelectAll() throws IOException{
     
     text.selectAll();
@@ -257,8 +198,6 @@ text.replaceRange("", text.getSelectionStart(),
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem26 = new javax.swing.JMenuItem();
@@ -402,13 +341,6 @@ text.replaceRange("", text.getSelectionStart(),
 
         jMenuBar1.add(jMenu2);
 
-        jMenu5.setText("Find");
-
-        jMenuItem7.setText("Find");
-        jMenu5.add(jMenuItem7);
-
-        jMenuBar1.add(jMenu5);
-
         jMenu9.setText("Help");
 
         jMenu10.setText("Contents");
@@ -458,12 +390,12 @@ text.replaceRange("", text.getSelectionStart(),
           // implementing window events
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
                     // Adding an  event to Reopen closed files in  bpad.
-      //  new ReOpenClosedFiles().setVisible(true);
+       new ReOpenClosedFiles().setVisible(true);
        
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-    
+            new clearrecent().setVisible(true);    
     }//GEN-LAST:event_jMenuItem4ActionPerformed
                // implementing window events
            //Open a new file upon  demand
@@ -543,20 +475,14 @@ text.replaceRange("", text.getSelectionStart(),
 // implementing window events
           //Opening the about us frame which tells us what this application is about.
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
-        try {
-            Aboutus();        
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+               new AboutUs().setVisible(true);
+        
+        
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
-        try{
-           Contact();
-        }catch(IOException ex){
-        ex.printStackTrace();
-        
-        }        
+               new ContactUs().setVisible(true);
+               
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
@@ -609,7 +535,6 @@ text.replaceRange("", text.getSelectionStart(),
     private javax.swing.JMenu jMenu10;
     private static javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -625,7 +550,6 @@ text.replaceRange("", text.getSelectionStart(),
     private javax.swing.JMenuItem jMenuItem4;
     public static javax.swing.JMenuItem jMenuItem5;
     private static javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JTextArea text;
